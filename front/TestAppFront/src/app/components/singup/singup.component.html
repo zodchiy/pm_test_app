@@ -1,0 +1,75 @@
+<div class="signup-wrapper" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Sign Up</mat-card-title>
+    </mat-card-header>
+   <mat-card-content>
+    <mat-horizontal-stepper [linear]="true" labelPosition="bottom">
+      <mat-step [stepControl]="firstStepForm" errorMessage="Step 1 in error">
+          <ng-template matStepLabel>step 1</ng-template>
+          <div class="step1-form" [formGroup]="firstStepForm">
+            <mat-form-field>
+                <input matInput type="email" name="login"
+                       placeholder="Login" formControlName="login">        
+                <mat-error *ngIf="login?.errors">This is not a valid email.</mat-error>        
+            </mat-form-field>        
+            <mat-form-field>        
+                <input matInput type="password"
+                       placeholder="Password" formControlName="password">        
+                <mat-error *ngIf="password?.errors">The password is mandatory.</mat-error>        
+            </mat-form-field>        
+            <mat-form-field>        
+                <input matInput type="password"
+                       placeholder="Confirm password" formControlName="confirmPassword">        
+                <mat-error *ngIf="confirmPassword?.errors">The confirm password is mandatory.</mat-error>        
+            </mat-form-field>        
+            <mat-checkbox color="primary" formControlName="isAgree">
+                Agree
+            </mat-checkbox>        
+        </div>
+          <div class="stepper-buttons">
+              <button [disabled]="!firstStepForm.valid" mat-raised-button color="primary" matStepperNext>
+                  Go to Step 2
+              </button>
+          </div>
+      </mat-step>
+      <mat-step [stepControl]="secondStepForm" errorMessage="Step 2 in error">
+          <ng-template matStepLabel>step 2</ng-template>
+          <div class="step2-form" [formGroup]="secondStepForm">
+            <mat-form-field>        
+                <mat-select placeholder="Select country" formControlName="country" (selectionChange)="onCountryChange($event)">        
+                    <ng-container *ngFor="let country of (countryList$ | async)">        
+                        <mat-option [value]="country.id">{{country.name}}</mat-option>        
+                    </ng-container>        
+                </mat-select>        
+            </mat-form-field>        
+            <mat-form-field>        
+                <mat-select placeholder="Select province" formControlName="province">        
+                    <ng-container *ngIf="(provinceListLoading$ | async) === false; else loading ">        
+                        <mat-option *ngFor="let province of (provinceList$ | async)"
+                                    [value]="province.id">{{province.name}}</mat-option>        
+                    </ng-container>        
+                    <ng-template #loading>
+                        <mat-option disabled>
+                            <div class="deferred-select-placeholder-container">
+                                <span>Loading...</span>
+                                <mat-spinner class="spinner" diameter="20"></mat-spinner>
+                            </div>
+                        </mat-option>
+                    </ng-template>        
+                </mat-select>        
+            </mat-form-field>        
+        </div>        
+          <div class="stepper-buttons">
+              <button mat-raised-button matStepperPrevious>Back</button>
+              <button mat-raised-button color="primary"
+                      [disabled]="!step2.form.valid"
+                      (click)="submit(step1.form.value, step2.form.value)">
+                  Save
+              </button>
+            </div>
+      </mat-step>
+  </mat-horizontal-stepper>
+   </mat-card-content>
+  </mat-card>
+</div>
