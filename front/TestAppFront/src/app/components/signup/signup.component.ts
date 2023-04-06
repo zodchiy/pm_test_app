@@ -75,7 +75,7 @@ export class SignupComponent implements OnInit {
     {
       if(result.result)
       {
-        console.log("Получилось!");
+        console.log("Its work!");
       }
     });
  }
