@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EqualToValidator } from 'src/app/common/EqualToValidator';
+import { MatSelectChange } from '@angular/material/select';
+import { EqualToValidator } from 'src/app/helpers/EqualToValidator';
+import Country from 'src/app/models/dto/country';
+import Province from 'src/app/models/dto/province';
+import { CountryService } from 'src/app/services/country.service';
+import { ProvinceService } from 'src/app/services/province.service';
 @Component({
   selector: 'app-singup',
   templateUrl: './singup.component.html',
@@ -9,9 +14,19 @@ import { EqualToValidator } from 'src/app/common/EqualToValidator';
 export class SignupComponent implements OnInit {
   public firstStepForm!: FormGroup;
   public secondStepForm!: FormGroup;
-  constructor(private formbuilder: FormBuilder) { }
+  countryList: Country[] = [];
+  provinceList: Province[] = [];
+  constructor(
+    private formbuilder: FormBuilder, 
+    private countryService: CountryService, 
+    private provinceService: ProvinceService
+    ) { }
 
   ngOnInit() {
+    this.countryService
+    .getCountries()
+    .subscribe((result) => (this.countryList = result.countries));
+
     this.firstStepForm = this.formbuilder.group({
       login: ['', { validators: [Validators.required, Validators.email], updateOn: 'blur'}],
       password: ['', [Validators.required, Validators.pattern('(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$')]],
@@ -19,8 +34,9 @@ export class SignupComponent implements OnInit {
       isAgree: [false, Validators.requiredTrue],
     },
     {
-      Validators: EqualToValidator('password', 'confirmPassword'),
+      validator: EqualToValidator('password', 'confirmPassword'),
     });
+
     this.secondStepForm = this.formbuilder.group({
       country: ['', Validators.required],
       province: ['', Validators.required],
@@ -36,5 +52,16 @@ export class SignupComponent implements OnInit {
   get country() { return this.secondStepForm.get('country'); }
   get province() { return this.secondStepForm.get('province'); }
   
+  onCountryChange($event: MatSelectChange){
+    if(this.country != null && this.country?.value != null && this.country?.value != "0")
+    {
+      this.provinceService
+      .getProvincesbyCountry(this.country.value)
+      .subscribe((result) => (this.provinceList = result.provinces));
+    }
+  }
+ submit(){
   
+ }
+
 }

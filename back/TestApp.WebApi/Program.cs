@@ -49,9 +49,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: CORS_POLICY,
         corsPolicyBuilder =>
         {
-            corsPolicyBuilder.WithOrigins("*");
-            corsPolicyBuilder.AllowAnyMethod();
+            corsPolicyBuilder.AllowAnyOrigin();
             corsPolicyBuilder.AllowAnyHeader();
+            corsPolicyBuilder.AllowAnyMethod();
         });
 });
 builder.Services.AddControllers();
@@ -121,7 +121,7 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
 });
 
-
+app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

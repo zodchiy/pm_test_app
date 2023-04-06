@@ -17,7 +17,7 @@ namespace TestApp.WebApi.ProvinceEndpoint
 
         public void AddRoute(IEndpointRouteBuilder app)
         {
-            app.MapGet("api/provinces/{countryid}",
+            app.MapGet("api/provinces/byCountry/{countryid}",
                 async (int countryid, IRepository<Province> provinceRepository) =>
                 {
                     return await HandleAsync(new GetByIdCountryRequest(countryid), provinceRepository);
