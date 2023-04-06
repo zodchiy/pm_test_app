@@ -12,9 +12,11 @@ using TestApp.Infrastructure.Identity;
 using TestApp.Infrastructure.Logging;
 using TestApp.WebApi;
 using AutoMapper;
+using MinimalApi.Endpoint.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 Dependencies.ConfigureServices(builder.Configuration, builder.Services);
-
+builder.Services.AddEndpoints();
 // Add services to the container.
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
         .AddEntityFrameworkStores<AppIdentityDbContext>()
@@ -61,7 +63,7 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Test App API", Version = "v1" });
     c.EnableAnnotations();
     c.SchemaFilter<CustomSchemaFilters>();
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    /*c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = @"JWT Authorization header using the Bearer scheme.",
         Name = "Authorization",
@@ -71,23 +73,23 @@ builder.Services.AddSwaggerGen(c =>
     });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+        {
             {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
                     {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            },
-                            Scheme = "oauth2",
-                            Name = "Bearer",
-                            In = ParameterLocation.Header,
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    },
+                    Scheme = "oauth2",
+                    Name = "Bearer",
+                    In = ParameterLocation.Header,
 
-                        },
-                        new List<string>()
-                    }
-            });
+                },
+                new List<string>()
+            }
+        });*/
 });
 
 var app = builder.Build();
@@ -112,17 +114,17 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+});
+
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
+app.MapEndpoints();
 
 app.Run();
