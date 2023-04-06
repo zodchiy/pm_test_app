@@ -18,7 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 Dependencies.ConfigureServices(builder.Configuration, builder.Services);
 builder.Services.AddEndpoints();
 // Add services to the container.
-builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
         .AddEntityFrameworkStores<AppIdentityDbContext>()
         .AddDefaultTokenProviders();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));

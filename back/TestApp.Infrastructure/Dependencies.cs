@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestApp.Infrastructure.Data;
 using TestApp.Infrastructure.Identity;
 
@@ -19,17 +14,17 @@ namespace TestApp.Infrastructure
 
             if (useOnlyInMemoryDatabase)
             {
-                 services.AddDbContext<AppDbContext>(c =>
+                /* services.AddDbContext<AppDbContext>(c =>
                     c.UseInMemoryDatabase("AppDb"));
 
                  services.AddDbContext<AppIdentityDbContext>(options =>
-                     options.UseInMemoryDatabase("AppIdentityDb"));
-                /*services.AddDbContext<AppDbContext>(c =>
+                     options.UseInMemoryDatabase("AppIdentityDb"));*/
+                services.AddDbContext<AppDbContext>(c =>
                  c.UseSqlServer(configuration.GetConnectionString("CatalogConnection")));
 
                 // Add Identity DbContext
                 services.AddDbContext<AppIdentityDbContext>(options =>
-                    options.UseSqlServer(configuration.GetConnectionString("IdentityConnection")));*/
+                    options.UseSqlServer(configuration.GetConnectionString("IdentityConnection")));
 
             }
             else

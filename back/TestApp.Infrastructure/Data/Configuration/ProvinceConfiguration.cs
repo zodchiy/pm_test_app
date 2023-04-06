@@ -18,7 +18,7 @@ namespace TestApp.Infrastructure.Data.Configuration
             builder.Property(p => p.Name).HasMaxLength(100);
             builder.HasOne(p => p.Country)
                .WithMany()
-               .HasForeignKey(p => p.CountrydId);
+               .HasForeignKey(p => p.CountryId);
         }
     }
 }
