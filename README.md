@@ -1,2 +1,4 @@
 # pm_test_app
-application test
+A little experiment with DDD + Ardalis.ApiEndpoints.
+
+
