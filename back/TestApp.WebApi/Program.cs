@@ -13,12 +13,19 @@ using TestApp.Infrastructure.Logging;
 using TestApp.WebApi;
 using AutoMapper;
 using MinimalApi.Endpoint.Extensions;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 Dependencies.ConfigureServices(builder.Configuration, builder.Services);
 builder.Services.AddEndpoints();
 // Add services to the container.
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => {
+    options.Password.RequireDigit = true;
+    options.Password.RequiredLength = 8;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+})
         .AddEntityFrameworkStores<AppIdentityDbContext>()
         .AddDefaultTokenProviders();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));

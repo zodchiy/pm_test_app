@@ -5,7 +5,7 @@ namespace TestApp.Core.Entities;
 
 public class User : BaseEntity, IAggregateRoot
 {
-    public int Identity { get; private set; }
+    public string Identity { get; private set; }
 	public int CountrydId { get; private set; }
 	public Country? Country { get; private set; }
 	public int ProvinceId { get; private set; }
@@ -13,7 +13,7 @@ public class User : BaseEntity, IAggregateRoot
 
 	private User() { }
 
-    public User(int identity, int countrydId, int provinceId) : this()
+    public User(string identity, int countrydId, int provinceId) : this()
     {
         Identity = identity;
         CountrydId = countrydId;
