@@ -9,10 +9,10 @@ namespace TestApp.Core.Entities.UserAggregade
 {
     public class Country : BaseEntity, IAggregateRoot
     {
-        public string CountryName { get; private set; }
-        public Country(string countryName)
+        public string Name { get; private set; }
+        public Country(string name)
         {
-            CountryName = countryName;
+            Name = name;
         }
     }
 }

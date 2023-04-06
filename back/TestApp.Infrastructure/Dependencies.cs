@@ -19,12 +19,18 @@ namespace TestApp.Infrastructure
 
             if (useOnlyInMemoryDatabase)
             {
-                services.AddDbContext<AppDbContext>(c =>
-                   c.UseInMemoryDatabase("AppDb"));
+                 services.AddDbContext<AppDbContext>(c =>
+                    c.UseInMemoryDatabase("AppDb"));
 
+                 services.AddDbContext<AppIdentityDbContext>(options =>
+                     options.UseInMemoryDatabase("AppIdentityDb"));
+                /*services.AddDbContext<AppDbContext>(c =>
+                 c.UseSqlServer(configuration.GetConnectionString("CatalogConnection")));
+
+                // Add Identity DbContext
                 services.AddDbContext<AppIdentityDbContext>(options =>
-                    options.UseInMemoryDatabase("AppIdentityDb"));
-              
+                    options.UseSqlServer(configuration.GetConnectionString("IdentityConnection")));*/
+
             }
             else
             {

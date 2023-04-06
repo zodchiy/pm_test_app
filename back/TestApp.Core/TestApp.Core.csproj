@@ -14,4 +14,8 @@
     <None Include="Entities\UserAggregade\User.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Ardalis.Specification" Version="6.1.0" />
+  </ItemGroup>
+
 </Project>

@@ -9,13 +9,13 @@ namespace TestApp.Core.Entities.UserAggregade
 {
     public class Province : BaseEntity, IAggregateRoot
     {
-        public string ProvinceName { get; private set; }
+        public string Name { get; private set; }
         public int CountrydId { get; private set; }
         public Country? Country { get; private set; }
-        public Province(int countrydId, string provinceName)
+        public Province(int countrydId, string name)
         {
             CountrydId = countrydId;
-            ProvinceName = provinceName;
+            Name = name;
             
         }
     }

@@ -15,7 +15,7 @@ namespace TestApp.Infrastructure.Data.Configuration
         {
             builder.HasKey(p => p.Id);
             builder.HasIndex(p => p.Id).IsUnique();
-            builder.Property(p => p.CountryName).HasMaxLength(100);
+            builder.Property(p => p.Name).HasMaxLength(100);
         }
     }
 }
