@@ -5,15 +5,17 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using TestApp.Core;
 using TestApp.Core.Interfaces;
+using TestApp.Infrastructure;
 using TestApp.Infrastructure.Data;
 using TestApp.Infrastructure.Identity;
 using TestApp.Infrastructure.Logging;
 using TestApp.WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
+Dependencies.ConfigureServices(builder.Configuration, builder.Services);
 
 // Add services to the container.
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
         .AddEntityFrameworkStores<AppIdentityDbContext>()
         .AddDefaultTokenProviders();
 builder.Services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));

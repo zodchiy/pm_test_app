@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TestApp.Infrastructure.Identity
 {
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser : IdentityUser<Guid>
     {
     }
 }

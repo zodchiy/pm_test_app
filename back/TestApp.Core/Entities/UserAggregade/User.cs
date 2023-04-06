@@ -13,8 +13,10 @@ public class User : BaseEntity, IAggregateRoot
 
 	private User() { }
 
-    public User(string identity) : this()
+    public User(string identity, int countrydId, int provinceId) : this()
     {
         IdentityGuid = identity;
+        CountrydId = countrydId;
+        ProvinceId = provinceId;
     }
 }
