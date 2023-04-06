@@ -43,9 +43,13 @@ namespace TestApp.WebApi.UserEndpoint
                 if(newIdentityUser != null)
                 {
                     var newuser = new User(newIdentityUser.Id.ToString(), request.CountryId, request.ProvinceId);
-                    newuser = await _userRepository.AddAsync(newuser);
+                    _ = await _userRepository.AddAsync(newuser);
                 }
                 
+            }
+            else
+            {
+                response.Error = string.Join(';', identityRes.Errors.Select(x => x.Description));
             }
             response.Result = identityRes.Succeeded;
             //if login

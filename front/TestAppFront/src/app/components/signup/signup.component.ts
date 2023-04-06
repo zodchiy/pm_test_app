@@ -8,7 +8,11 @@ import { CountryService } from 'src/app/services/country.service';
 import { ProvinceService } from 'src/app/services/province.service';
 import { SignUpService } from 'src/app/services/signup.service';
 import  SignUpRequest from 'src/app/models/request/SignUpRequest';
-
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -23,7 +27,8 @@ export class SignupComponent implements OnInit {
     private formbuilder: FormBuilder, 
     private countryService: CountryService, 
     private provinceService: ProvinceService,
-    private signUpService: SignUpService
+    private signUpService: SignUpService,
+    private _snackBar: MatSnackBar
     ) { }
 
   ngOnInit() {
@@ -75,7 +80,16 @@ export class SignupComponent implements OnInit {
     {
       if(result.result)
       {
-        console.log("Its work!");
+        this._snackBar.open('User created', 'Ok', {
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+        });
+      }
+      else{
+        this._snackBar.open(result.error, 'Ok', {
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+        });
       }
     });
  }

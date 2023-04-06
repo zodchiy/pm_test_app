@@ -10,5 +10,6 @@
         {
         }
         public bool Result { get; set; } = false;
+        public string Error { get; set; }
     }
 }
